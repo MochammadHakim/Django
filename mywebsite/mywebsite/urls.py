@@ -25,5 +25,6 @@ urlpatterns = [
     path(r'login/user.html', loginusr),
     path(r'login/admin.html/input.html', input),
     path(r'detailbook.html', detailbook),
+    path(r'home/detailbook.html', detailbook),
     path(r'', home),
 ]
