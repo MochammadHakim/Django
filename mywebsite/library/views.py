@@ -13,4 +13,7 @@ def loginusr(request):
 
 def input(request):
     return render(request, 'Admin/input.html')
+
+def detailbook(request):
+    return render(request, 'detailbook.html')
     
