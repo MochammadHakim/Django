@@ -3,13 +3,13 @@
 <html lang=en>
 
 <head>
-<title>{% block head_tittle %}Perpustakaan{% endblock head_tittle %}</title>
+<title>{% block head_tittle %}Admin | Perpustakaan {% endblock head_tittle %}</title>
 {% include 'bootstrap5.html' %}
-{% include 'snippets/navbar2.html' %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% include 'snippets/navbaradmin.html' %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
 <head>
 <body>
- <div class="form">  
+    <div class="form">  
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <form action='' method='post'>
             <div class="mb-3 row">
