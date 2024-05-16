@@ -7,5 +7,16 @@
 <head>
 <body>
     <h1>Hello World</h1>
+    <h1>-- List of Books --</h1>
+
+    
+    {% for item in all %}
+        <strong> {{ item.judulBuku }} </strong> <br/>
+        {{ item.penulisBuku }} <br/>
+        {{ item.jumlahHalaman }} {{ item.tahunTerbit }} </br>
+        <hr>
+    {% endfor %}
+
+
 </body>
 </html>
