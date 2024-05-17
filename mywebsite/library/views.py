@@ -4,7 +4,6 @@ from .models import BookAttribute
 
 # Create your views here.
 def home(request):
-<<<<<<< HEAD
     return render(request, 'base.html')
 
 def loginadm(request):
@@ -19,13 +18,13 @@ def input(request):
 def detailbook(request):
     return render(request, 'detailbook.html')
     
-=======
+
+def home(request):
     all_books = BookAttribute.objects.all
     return render(request, 'base.html', {'all':all_books})
     # return render(request, 'base.html')
-
 # def LibraryList(request):
 #     all_books = LibraryList.objects.all
 #     return render(request, 'base.html', {'all':all_books})
 #     # return render(request, 'base.html')
->>>>>>> 671d48398833dfc3d34ea0bfded2ce62cd3f5794
+

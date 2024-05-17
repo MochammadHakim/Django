@@ -4,10 +4,10 @@ from django.db import models
 
 class BookAttribute(models.Model):
     judulBuku = models.CharField(max_length=255)
-    penulisBuku = models.CharField(max_length=255, blank=True, null=False)
+    penulisBuku = models.CharField(max_length=255, blank=True, null=True)
     # --- FORMAT TAHUN TERBIT = YYYY-MM-DD
     tahunTerbit = models.DateField()
-    kategoriBuku = models.CharField(max_length=255, blank=True, null=False)
+    kategoriBuku = models.CharField(max_length=255, blank=True, null=True)
     jumlahHalaman = models.IntegerField()
     coverBuku = models.ImageField(upload_to='covers/')
     status_peminjaman = models.CharField(max_length=20, null=False, blank=True, choices=[
