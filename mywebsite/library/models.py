@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.contrib import admin
 # Create your models here.
 
 class BookAttribute(models.Model):
@@ -16,3 +17,15 @@ class BookAttribute(models.Model):
     ])
     def __str__(self):
         return self.judulBuku
+    
+class CustomUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    def __str__(self):
+        return self.user.username
+    
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ['user', 'is_staff']
+    list_filter = ['is_staff']
+    search_fields = ['user__username']

@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import BookAttribute
+from .models import BookAttribute, CustomUser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test
 from .forms import FormLogin
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 # Create your views here.
+
+def is_staff(user):
+    return user.is_authenticated and user.customuser.is_staff
 def home(request):
     return render(request, 'base.html')
 
@@ -18,14 +21,19 @@ def loginadm(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect('/login/admin.html/input.html')
+            custom_user = CustomUser.objects.get(user=user)
+            if custom_user.is_staff:
+                login(request, user)
+                return redirect('/login/admin.html/input.html')
+            elif custom_user.is_active:
+                login(request, user)
+                return redirect('/home')
     return render(request, 'login/admin.html', {'form':form})
 
 def loginusr(request):
     return render(request, 'login/user.html')
 
-@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(is_staff)
 def input(request):
     return render(request, 'Admin/input.html')
 
