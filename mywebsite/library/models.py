@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 
 class BookAttribute(models.Model):
@@ -29,3 +31,10 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['user', 'is_staff']
     list_filter = ['is_staff']
     search_fields = ['user__username']
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        CustomUser.objects.create(user=instance)
+    else:
+        instance.customuser.save()

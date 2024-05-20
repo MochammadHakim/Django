@@ -24,14 +24,11 @@ def loginadm(request):
             custom_user = CustomUser.objects.get(user=user)
             if custom_user.is_staff:
                 login(request, user)
-                return redirect('/login/admin.html/input.html')
+                return redirect(input)
             elif custom_user.is_active:
                 login(request, user)
-                return redirect('/home')
-    return render(request, 'login/admin.html', {'form':form})
-
-def loginusr(request):
-    return render(request, 'login/user.html')
+                return redirect(home)
+    return render(request, 'login/login.html', {'form':form})
 
 @user_passes_test(is_staff)
 def input(request):
@@ -43,7 +40,7 @@ def detailbook(request):
 def logoutadm(request):
     logout(request)
     request.session.flush()
-    return redirect('/home')
+    return redirect(home)
 
 def home(request):
     all_books = BookAttribute.objects.all

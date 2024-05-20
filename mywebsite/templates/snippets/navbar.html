@@ -1,13 +1,14 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Perpustakaan</a>
+    <a class="navbar-brand" href="{% url 'home' %}">Perpustakaan</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/home/">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Services </a>
@@ -19,17 +20,27 @@
           </ul>
         </li>
 
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/login/admin.html/">Admin</a></li>
+            <li><a class="dropdown-item" href="{% url 'loginadm' %}">Login</a></li>
             <li><a class="dropdown-item" href="/login/user.html/">User</a></li>
-            <!-- <li><hr class="dropdown-divider"></li> -->
+            <li><hr class="dropdown-divider"></li>
           </ul>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Link</a>
         </li> -->
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'loginadm' %}">Login</a>
+        </li>
+        {% endif %} {% if user.is_authenticated and user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'input' %}">Admin</a>
+        </li>
+        {% endif %}
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
