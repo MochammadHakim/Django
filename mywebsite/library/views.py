@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import FormLogin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+
+
 # Create your views here.
 def home(request):
     return render(request, 'base.html')
@@ -51,11 +53,11 @@ def home(request):
 
 def book_list(request):
     books = BookAttribute.objects.all()
-    return render(request, 'book_list.html', {'books': books})
+    return render(request, 'templates/library/book_list.html', {'books': books})
 
 def book_detail(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
-    return render(request, 'book_detail.html', {'book':book})
+    return render(request, 'templates/library/book_detail.html', {'book':book})
 
 def book_create(request):
     if request.method == "POST":
@@ -65,7 +67,7 @@ def book_create(request):
             return redirect('book_detail', pk=book.pk)
         else: 
             form = BookAttributeForm()
-        return render(request, 'book_form.html', {'form':form})
+        return render(request, 'templates/library/book_form.html', {'form':form})
     
 def book_edit(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
@@ -76,11 +78,11 @@ def book_edit(request, pk):
             return redirect('book_detail', pk=book.pk)
         else:
             form = BookAttributeForm(instance=book)
-        return render(request, 'book_form.html', {'form' : form})
+        return render(request, 'templates/library/book_form.html', {'form' : form})
     
 def book_delete(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
     if request.method == "POST":
         book.delete()
         return redirect('book_list')
-    return render(request, 'book_confirm_delete.html', {'book': book})
+    return render(request, 'templates/library/book_confirm_delete.html', {'book': book})
