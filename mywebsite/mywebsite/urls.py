@@ -16,15 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from library.views import home, loginadm, loginusr, input, detailbook
+from library.views import home, loginadm, loginusr, input, detailbook, logoutadm
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path, include
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'home/', home),
-    path(r'login/admin.html', loginadm),
-    path(r'login/user.html', loginusr),
+    path(r'login/admin.html/', loginadm),
+    path(r'login/user.html/', loginusr),
     path(r'login/admin.html/input.html', input),
     path(r'detailbook.html', detailbook),
     path(r'home/detailbook.html', detailbook),
     path(r'', home),
+    path(r'logout', logoutadm, name="logout"),
 ]
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('library.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
