@@ -43,13 +43,12 @@ def logoutadm(request):
 def home(request):
     all_books = BookAttribute.objects.all
     return render(request, 'base.html', {'all':all_books})
-    # return render(request, 'base.html')
+    
+# return render(request, 'base.html')
 # def LibraryList(request):
 #     all_books = LibraryList.objects.all
 #     return render(request, 'base.html', {'all':all_books})
 #     # return render(request, 'base.html')
-
-
 
 def book_list(request):
     books = BookAttribute.objects.all()
@@ -66,8 +65,10 @@ def book_create(request):
             book = form.save()
             return redirect('book_detail', pk=book.pk)
         else: 
-            form = BookAttributeForm()
-        return render(request, 'templates/library/book_form.html', {'form':form})
+            print("Form tidak Valid")
+    else:
+        form = BookAttributeForm()
+    return render(request, 'templates/library/book_form.html', {'form':form})
     
 def book_edit(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
@@ -76,9 +77,11 @@ def book_edit(request, pk):
         if form.is_valid():
             book = form.save()
             return redirect('book_detail', pk=book.pk)
-        else:
-            form = BookAttributeForm(instance=book)
-        return render(request, 'templates/library/book_form.html', {'form' : form})
+        else: 
+            print("Form tidak Valid")
+    else:
+        form = BookAttributeForm(instance=book)
+    return render(request, 'templates/library/book_form.html', {'form' : form})
     
 def book_delete(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)

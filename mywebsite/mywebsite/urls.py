@@ -20,6 +20,9 @@ from library.views import home, loginadm, loginusr, input, detailbook, logoutadm
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from library import views
+
+
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
@@ -27,7 +30,9 @@ urlpatterns = [
     path(r'login/admin.html/', loginadm),
     path(r'login/user.html/', loginusr),
     path(r'login/admin.html/input.html', input),
-    path(r'detailbook.html', detailbook),
+    path(r'input', views.input, name='input'),
+    path(r'detailbook', views.detailbook, name='detailbook'),
+    path(r'book/new/', views.book_create, name='book_create'),
     path(r'home/detailbook.html', detailbook),
     path(r'', home),
     path(r'logout', logoutadm, name="logout"),

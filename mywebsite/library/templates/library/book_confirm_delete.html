@@ -1,7 +1,0 @@
-<h2>Hapus Buku</h2>
-<p>Apakah Anda yakin ingin menghapus buku "{{ book.judulBuku }}"?</p>
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Ya, hapus</button>
-  <a href="{% url 'book_detail' book.pk %}">Tidak, kembali</a>
-</form>

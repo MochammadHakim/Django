@@ -1,0 +1,14 @@
+<!-- library/book_form.html -->
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Create Book</title>
+</head>
+
+<h2>{% if form.instance.pk %}Edit Buku{% else %}Tambah Buku Baru{% endif %}</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Simpan</button>
+</form>
+<a href="{% url 'book_list' %}">Kembali ke Daftar Buku</a>

@@ -1,0 +1,12 @@
+{% load static %}
+
+<h2>{{ BookAttribute.judulBuku }}</h2>
+<p>Penulis: {{ BookAttribute.penulisBuku }}</p>
+<p>Tahun Terbit: {{ BookAttribute.tahunTerbit }}</p>
+<p>Kategori: {{ BookAttribute.kategoriBuku }}</p>
+<p>Jumlah Halaman: {{ BookAttribute.jumlahHalaman }}</p>
+<p>Status: {{ BookAttribute.status_peminjaman }}</p>
+<img src="{{ BookAttribute.coverBuku.url }}" alt="{{ BookAttribute.judulBuku }}" />
+<a href="{% url 'book_edit' book.pk %}">Edit</a>
+<a href="{% url 'book_delete' book.pk %}">Delete</a>
+<a href="{% url 'book_list' %}">Kembali ke Daftar Buku</a>
