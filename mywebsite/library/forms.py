@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import BookAttribute
+from .models import TransaksiPeminjaman
 
 
 class FormLogin(forms.Form):
@@ -22,3 +23,13 @@ class BookAttributeForm(forms.ModelForm):
             'coverBuku',
             'status_peminjaman'
         ]
+
+class FormPeminjaman(forms.ModelForm):
+    class meta:
+        model = TransaksiPeminjaman
+        fields = ['user', 'buku']
+
+class FormPengembalian(forms.ModelForm):
+    class Meta:
+        model = TransaksiPeminjaman
+        fields = ['buku']

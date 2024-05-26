@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import BookAttribute, TransaksiPeminjaman
 
-# Register your models here.
+admin.site.register(BookAttribute)
+admin.site.register(TransaksiPeminjaman)

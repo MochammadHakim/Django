@@ -1,0 +1,7 @@
+{% extends 'base_generic.html' %} {% block content %}
+<h1>Pinjam Buku</h1>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Pinjam</button>
+</form>
+{% endblock %}
