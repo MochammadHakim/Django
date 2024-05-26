@@ -129,3 +129,9 @@ body {
   align-items: center;
   margin-bottom: 0.5em;
 }
+
+.btn-outline-success:hover {
+  color: #343a40; /* Mengubah warna teks saat dihover */
+  background-color: #ffc107; /* Mengubah warna latar belakang saat dihover */
+  border-color: #ffc107; /* Mengubah warna border saat dihover */
+}
