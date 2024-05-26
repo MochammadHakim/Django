@@ -7,68 +7,72 @@
 {% include 'bootstrap5.html' %}
 {% include 'snippets/navbaradmin.html' %}
 <link rel="stylesheet" href="{% static 'assets/css/admin.css' %}">
-
 <head>
 <body>
     <div class="form">  
-    <div class="my-3 pt-5 rounded shadow-sm">
-        <form action='' method='post'>
+    <div class="my-3 bg-body rounded shadow-sm">
+        <form method="post" action="{% url 'input' %}" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-3 row">
                 <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name='judul' id="judul">
+                    {{ form.judulBuku }}
                 </div>
             </div>
             <div class="mb-3 row">
+                
                 <label for="nama" class="col-sm-2 col-form-label">Pengarang</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name='pengarang' id="pengarang">
+                    {{ form.penulisBuku }}
                 </div>
             </div>
             <div class="mb-3 row">
+                
                 <label for="tahun_Terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control w-50" name='tahun_terbit' id="tahun_terbit">
+                    {{ form.tahunTerbit }}
                 </div>
             </div>
             <div class="mb-3 row">
+                
                 <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name='kategori' id="kategori">
+                    {{ form.kategoriBuku}}
                 </div>
             </div>
             <div class="mb-3 row">
+              
                 <label for="jumlah_halaman" class="col-sm-2 col-form-label">Jumlah halaman</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name='jumlah_halaman' id="jumlah_halaman">
+                    {{ form.jumlahHalaman}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+              
+                <label for="deskripsi" class="col-sm-2 col-form-label">Deskripsi</label>
+                <div class="col-sm-10">
+                    {{ form.deskripsi }}
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="cover_buku" class="col-sm-2 col-form-label">Cover Buku</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" name='cover_buku' id="cover_buku">
+                    {{ form.coverBuku }}
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="available" value="available" checked>
-                        <label class="form-check-label" for="available">
-                          Available
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="not-available" value="not-available">
-                        <label class="form-check-label" for="not-available">
-                          Not Available
-                        </label>
-                      </div>
+                <div class="mb-3 row">
+                    <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
+                    <div class="col-sm-10">
+                        {{ form.status_peminjaman }}
+                    </div>
                 </div>
-            </div>
+            
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary custom-button">SIMPAN</button>
                 </div>
             </div>
         </form>
@@ -76,7 +80,7 @@
     <!-- AKHIR FORM -->
     
     <!-- START DATA -->
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="my-3 pt-5 bg-body rounded shadow-sm">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -86,30 +90,34 @@
                     <th class="col-md-1">Tahun Terbit</th>
                     <th class="col-md-1">Kategori</th>
                     <th class="col-md-1">Halaman</th>
+                    <th class="col-md-1">Deskripsi</th> <!-- Tambahkan kolom untuk deskripsi -->
                     <th class="col-md-1">Cover Buku</th>
                     <th class="col-md-1">Status Peminjaman</th>
                     <th class="col-md-1">Aksi</th>
                 </tr>
             </thead>
             <tbody>
+                {% for book in books %}
                 <tr>
-                    <td>1</td>
-                    <td>Laskar Pelangi</td>
-                    <td>Andrea Hirata</td>
-                    <td>2005</td>
-                    <td>Novel</td>
-                    <td>529</td>
-                    <td></td>
-                    <td>Available</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ book.judulBuku }}</td>
+                    <td>{{ book.penulisBuku }}</td>
+                    <td>{{ book.tahunTerbit }}</td>
+                    <td>{{ book.kategoriBuku }}</td>
+                    <td>{{ book.jumlahHalaman }}</td>
+                    <td>{{ book.deskripsi }}</td> <!-- Tampilkan deskripsi buku -->
+                    <td><img src="{{ book.coverBuku.url }}" alt="{{ book.judulBuku }}" /></td>
+                    <td>{{ book.status_peminjaman }}</td>
                     <td>
-                        <a href="" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="" class="btn btn-danger btn-sm">Del</a>
+                        <a href="{% url 'book_edit' book.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger btn-sm">Del</a>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
-    
     </div>
+    
 </div>
 
 </body>

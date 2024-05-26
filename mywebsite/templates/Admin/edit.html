@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+<title>{% block head_tittle %}Admin | Perpustakaan {% endblock head_tittle %}</title>
+{% include 'bootstrap5.html' %}
+{% include 'snippets/navbaradmin.html' %}
+<link rel="stylesheet" href="{% static 'assets/css/admin.css' %}">
+<head>
+    <body>
+        <div class="form">  
+            <div class="my-3 bg-body rounded shadow-sm">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3 row">
+                        <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>
+                        <div class="col-sm-10">
+                            {{ form.judulBuku }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="nama" class="col-sm-2 col-form-label">Pengarang</label>
+                        <div class="col-sm-10">
+                            {{ form.penulisBuku }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="tahun_Terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
+                        <div class="col-sm-10">
+                            {{ form.tahunTerbit }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
+                        <div class="col-sm-10">
+                            {{ form.kategoriBuku}}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="jumlah_halaman" class="col-sm-2 col-form-label">Jumlah halaman</label>
+                        <div class="col-sm-10">
+                            {{ form.jumlahHalaman}}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="deskripsi" class="col-sm-2 col-form-label">Deskripsi</label>
+                        <div class="col-sm-10">
+                            {{ form.deskripsi }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="cover_buku" class="col-sm-2 col-form-label">Cover Buku</label>
+                        <div class="col-sm-10">
+                            {{ form.coverBuku }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
+                        <div class="mb-3 row">
+                            <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
+                            <div class="col-sm-10">
+                                {{ form.status_peminjaman }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary custom-button">SIMPAN</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- AKHIR FORM -->
+        </div>
+    </body>
+    </html>
+    
+    
+</html>

@@ -9,15 +9,16 @@ from django.dispatch import receiver
 class BookAttribute(models.Model):
     judulBuku = models.CharField(max_length=255)
     penulisBuku = models.CharField(max_length=255, blank=True, null=True)
-    # --- FORMAT TAHUN TERBIT = YYYY-MM-DD
     tahunTerbit = models.DateField()
     kategoriBuku = models.CharField(max_length=255, blank=True, null=True)
     jumlahHalaman = models.IntegerField()
     coverBuku = models.ImageField(upload_to='covers/')
+    deskripsi = models.TextField(blank=True, null=True)  # Tambahkan bidang deskripsi
     status_peminjaman = models.CharField(max_length=20, null=False, blank=True, choices=[
         ('available', 'Available'),
         ('not-available', 'Not Available'),
     ])
+
     def __str__(self):
         return self.judulBuku
     
@@ -29,7 +30,6 @@ class TransaksiPeminjaman(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.buku.Judulbuku}"
-
     
 class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)

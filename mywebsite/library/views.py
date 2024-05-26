@@ -15,7 +15,8 @@ def is_active(user):
     return user.is_authenticated
 
 def home(request):
-    return render(request, 'base.html')
+    books = BookAttribute.objects.all()
+    return render(request, 'base.html', {'books': books})
 
 def loginadm(request):
     form = FormLogin()
@@ -37,59 +38,50 @@ def loginadm(request):
 
 @user_passes_test(is_staff)
 def input(request):
-    return render(request, 'Admin/input.html')
+    # Ambil semua objek BookAttribute
+    books = BookAttribute.objects.all()
 
-def detailbook(request):
-    return render(request, 'detailbook.html')
+    if request.method == "POST":
+        form = BookAttributeForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save()
+            return redirect('home')  # Mengarahkan kembali ke halaman beranda setelah menyimpan
+    else:
+        form = BookAttributeForm()
+
+    # Masukkan data buku ke dalam konteks saat merender template input.html
+    return render(request, 'Admin/input.html', {'form': form, 'books': books})
+
+
+def detailbook(request, pk):
+    book = get_object_or_404(BookAttribute, pk=pk)
+    return render(request, 'detailbook.html', {'book':book})
 
 def logoutadm(request):
     logout(request)
     request.session.flush()
     return redirect(home)
-
-def home(request):
-    all_books = BookAttribute.objects.all
-    return render(request, 'base.html', {'all':all_books})
-
-def book_list(request):
-    books = BookAttribute.objects.all()
-    return render(request, 'templates/library/book_list.html', {'books': books})
-
-def book_detail(request, pk):
-    book = get_object_or_404(BookAttribute, pk=pk)
-    return render(request, 'templates/library/book_detail.html', {'book':book})
-
-
-def book_create(request):
-    if request.method == "POST":
-        form = BookAttributeForm(request.POST, request.FILES)
-        if form.is_valid():
-            book = form.save()
-            return redirect('book_list')  # Mengarahkan kembali tanpa argumen kata kunci
-    else:
-        form = BookAttributeForm()
-    return render(request, 'templates/library/book_form.html', {'form':form})
-
     
+@user_passes_test(is_staff)
 def book_edit(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
     if request.method == "POST":
         form = BookAttributeForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             book = form.save()
-            return redirect('book_detail', pk=book.pk)
+            return redirect('input')
         else: 
             print("Form tidak Valid")
     else:
         form = BookAttributeForm(instance=book)
-    return render(request, 'templates/library/book_form.html', {'form' : form})
+    return render(request, 'Admin/edit.html', {'form' : form})
 
-
+@user_passes_test(is_staff)
 def book_delete(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
     if request.method == "POST":
         book.delete()
-        return redirect('book_list')
+        return redirect('input')
     return render(request, 'templates/library/book_confirm_delete.html', {'book': book})
 
 @user_passes_test(is_active)

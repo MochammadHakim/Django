@@ -1,220 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
     <title>Landing Page</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
     <!-- Load static template tags -->
     {% load static %}
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
-    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
 
     <style>
-        .swiper-slide img {
-            width: 300px;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-            margin: auto;
-        }
+      .swiper-slide img {
+        width: 300px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+        margin: auto;
+      }
 
-        .swiper-container {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 800px;
-            position: relative;
-        }
+      .swiper-container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 800px;
+        position: relative;
+      }
 
-        /* Custom animation for initial hidden state */
-        .swiper-slide-hidden {
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+      /* Custom animation for initial hidden state */
+      .swiper-slide-hidden {
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
 
-        .swiper-slide-active .swiper-slide-hidden {
-            opacity: 1;
-            transform: scale(1);
-        }
+      .swiper-slide-active .swiper-slide-hidden {
+        opacity: 1;
+        transform: scale(1);
+      }
 
-        /* Positioning navigation buttons */
-        .swiper-button-next, .swiper-button-prev {
-            top: 50%;
-            transform: translateY(-50%);
-            width: 27px;
-            height: 44px;
-            background-size: 27px 44px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+      /* Positioning navigation buttons */
+      .swiper-button-next,
+      .swiper-button-prev {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 27px;
+        height: 44px;
+        background-size: 27px 44px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
 
-        .swiper-button-next {
-            right: 10px;
-            background-image: url('{% static "assets/img/swiper-button-next.png" %}');
-        }
+      .swiper-button-next {
+        right: 10px;
+        background-image: url('{% static "assets/img/swiper-button-next.png" %}');
+      }
 
-        .swiper-button-prev {
-            left: 10px;
-            background-image: url('{% static "assets/img/swiper-button-prev.png" %}');
-        }
+      .swiper-button-prev {
+        left: 10px;
+        background-image: url('{% static "assets/img/swiper-button-prev.png" %}');
+      }
 
-        .swiper-container:hover .swiper-button-next,
-        .swiper-container:hover .swiper-button-prev {
-            opacity: 1;
-        }
+      .swiper-container:hover .swiper-button-next,
+      .swiper-container:hover .swiper-button-prev {
+        opacity: 1;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <section class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-7 pt-5 mb-5 align-self-center">
-                    <div class="promo pe-md-3 pe-lg-5">
-                        <h1 class="headline mb-3">
-                            Best Selling <br>Indonesia's First International Bestselling Author
-                        </h1>
-                        <div class="subheadline mb-4">
-                            “Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari daerah miskin di Belitung Timur dalam mengejar cita-cita dan meraih pendidikan yang layak.
-                        </div>
-                        <div class="cta-holder row gx-md-3 gy-3 gy-md-0">
-                            <div class="col-12 col-md-auto">
-                                <button type="button" class="btn btn-outline-primary w-100">Detail Book</button>
-                            </div>
-                        </div>
-                        <div class="hero-quotes mt-5">
-                            <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide swiper-slide-hidden">
-                                        <img src="{% static 'assets/img/cover1.png' %}" class="img-fluid book-cover"
-                                            alt="book cover">
-                                        <blockquote class="quote p-4 theme-bg-light">
-                                            "Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari daerah miskin di Belitung Timur dalam mengejar cita-cita dan meraih pendidikan yang layak."
-                                        </blockquote>
-                                    </div>
-                                    <div class="swiper-slide swiper-slide-hidden">
-                                        <img src="{% static 'assets/img/cover3.jpg' %}" class="img-fluid book-cover"
-                                            alt="book cover">
-                                        <blockquote class="quote p-4 theme-bg-light">
-                                            "Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya..."
-                                        </blockquote>
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-7 pt-5 mb-5 align-self-center">
+            <div class="promo pe-md-3 pe-lg-5">
+              <h1 class="headline mb-3">Best Selling <br />Indonesia's First International Bestselling Author</h1>
+              <div class="subheadline mb-4">
+                “Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari daerah miskin di Belitung Timur dalam mengejar cita-cita dan meraih pendidikan yang layak.
+              </div>
+              <div class="cta-holder row gx-md-3 gy-3 gy-md-0">
+                <div class="col-12 col-md-auto">
+                  <button type="button" class="btn btn-outline-primary w-100">Detail Book</button>
                 </div>
-                <div class="col-12 col-md-5 mb-5 align-self-center">
-                    <div class="book-cover-holder">
-                        <img class="img-fluid book-cover" src="{% static 'assets/img/cover1.png' %}" alt="book cover">
-                        <div class="book-badge d-inline-block shadow">
-                        </div>
+              </div>
+              <div class="hero-quotes mt-5">
+                <div class="swiper-container">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide swiper-slide-hidden">
+                      <img src="{% static 'assets/img/cover1.png' %}" class="img-fluid book-cover" alt="book cover" />
+                      <blockquote class="quote p-4 theme-bg-light">
+                        "Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari daerah miskin di Belitung Timur dalam mengejar cita-cita dan meraih pendidikan yang layak."
+                      </blockquote>
                     </div>
+                    <div class="swiper-slide swiper-slide-hidden">
+                      <img src="{% static 'assets/img/cover3.jpg' %}" class="img-fluid book-cover" alt="book cover" />
+                      <blockquote class="quote p-4 theme-bg-light">"Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya..."</blockquote>
+                    </div>
+                  </div>
+                  <div class="swiper-pagination"></div>
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="col-12 col-md-5 mb-5 align-self-center">
+            <div class="book-cover-holder">
+              <img class="img-fluid book-cover" src="{% static 'assets/img/cover1.png' %}" alt="book cover" />
+              <div class="book-badge d-inline-block shadow"></div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="benefits-section" class="skills section-bg">
-        <div class="container py-5">
-            <h2 class="section-heading text-center mb-3">List Buku-Buku</h2>
-            <div class="section-intro single-col-max mx-auto text-center mb-5">Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit consequat consequat. Orci varius natoque penatibus et magnis.</div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card">
-                        <img src="{% static 'assets/img/cover1.png' %}" class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Laskar Pelangi</h5>
-                            <p class="card-text">“Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari...</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="{% static 'assets/img/cover3.jpg' %}" class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Dreamist of the Stars</h5>
-                            <p class="card-text">Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya...</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Buku</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Buku</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Buku</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="book cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Buku</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <a href="#" class="btn btn-primary">More Detail</a>
-                            <button type="button" class="btn btn-outline-success">Borrow</button>
-                            <button type="button" class="btn btn-outline-info">Return</button>
-                        </div>
-                    </div>
-                </div>
+      <div class="container py-5">
+        <h2 class="section-heading text-center mb-3">List Buku-Buku</h2>
+        <div class="section-intro single-col-max mx-auto text-center mb-5">Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit consequat consequat. Orci varius natoque penatibus et magnis.</div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card">
+              <img src="{% static 'assets/img/cover1.png' %}" class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">Laskar Pelangi</h5>
+                <p class="card-text">“Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari...</p>
+                <a href="#" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
             </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="{% static 'assets/img/cover3.jpg' %}" class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">Dreamist of the Stars</h5>
+                <p class="card-text">Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya...</p>
+                <a href="#" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
+            </div>
+          </div>
+          {% for book in books %}
+          <div class="col">
+            <div class="card">
+              <img src="{{ book.coverBuku.url }}" class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">{{ book.judulBuku }}</h5>
+                <p class="card-text">{{ book.deskripsi }}</p>
+                <a href="{% url 'detailbook' book.pk %}" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="col">
+            <div class="card">
+              <img src="..." class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">Judul Buku</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <a href="#" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="..." class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">Judul Buku</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <a href="#" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="..." class="card-img-top" alt="book cover" />
+              <div class="card-body">
+                <h5 class="card-title">Judul Buku</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <a href="#" class="btn btn-primary">More Detail</a>
+                <button type="button" class="btn btn-outline-success">Borrow</button>
+                <button type="button" class="btn btn-outline-info">Return</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Vendor JS Files -->
@@ -228,37 +222,36 @@
 
     <!-- Initialize Swiper -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var swiper = new Swiper('.swiper-container', {
-                spaceBetween: 10,
-                slidesPerView: 1,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                on: {
-                    slideChangeTransitionStart: function () {
-                        var slides = document.querySelectorAll('.swiper-slide');
-                        slides.forEach(slide => {
-                            slide.classList.add('swiper-slide-hidden');
-                        });
-                        slides[this.activeIndex].classList.remove('swiper-slide-hidden');
-                    },
-                    init: function () {
-                        var slides = document.querySelectorAll('.swiper-slide');
-                        slides.forEach(slide => {
-                            slide.classList.add('swiper-slide-hidden');
-                        });
-                        slides[this.activeIndex].classList.remove('swiper-slide-hidden');
-                    }
-                }
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".swiper-container", {
+          spaceBetween: 10,
+          slidesPerView: 1,
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          on: {
+            slideChangeTransitionStart: function () {
+              var slides = document.querySelectorAll(".swiper-slide");
+              slides.forEach((slide) => {
+                slide.classList.add("swiper-slide-hidden");
+              });
+              slides[this.activeIndex].classList.remove("swiper-slide-hidden");
+            },
+            init: function () {
+              var slides = document.querySelectorAll(".swiper-slide");
+              slides.forEach((slide) => {
+                slide.classList.add("swiper-slide-hidden");
+              });
+              slides[this.activeIndex].classList.remove("swiper-slide-hidden");
+            },
+          },
         });
+      });
     </script>
-</body>
-
+  </body>
 </html>
