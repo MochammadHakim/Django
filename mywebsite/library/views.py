@@ -1,14 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import BookAttribute, CustomUser
+from .models import BookAttribute, CustomUser, TransaksiPeminjaman
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
-from .forms import FormLogin
+from .forms import FormLogin, BookAttributeForm, FormPeminjaman, FormPengembalian
 from django.conf import settings
+from datetime import datetime
 # Create your views here.
 
 def is_staff(user):
     return user.is_authenticated and user.customuser.is_staff
+
+def is_active(user):
+    return user.is_authenticated
+
 def home(request):
     return render(request, 'base.html')
 
@@ -45,9 +50,78 @@ def logoutadm(request):
 def home(request):
     all_books = BookAttribute.objects.all
     return render(request, 'base.html', {'all':all_books})
-    # return render(request, 'base.html')
-# def LibraryList(request):
-#     all_books = LibraryList.objects.all
-#     return render(request, 'base.html', {'all':all_books})
-#     # return render(request, 'base.html')
 
+def book_list(request):
+    books = BookAttribute.objects.all()
+    return render(request, 'templates/library/book_list.html', {'books': books})
+
+def book_detail(request, pk):
+    book = get_object_or_404(BookAttribute, pk=pk)
+    return render(request, 'templates/library/book_detail.html', {'book':book})
+
+
+def book_create(request):
+    if request.method == "POST":
+        form = BookAttributeForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save()
+            return redirect('book_list')  # Mengarahkan kembali tanpa argumen kata kunci
+    else:
+        form = BookAttributeForm()
+    return render(request, 'templates/library/book_form.html', {'form':form})
+
+    
+def book_edit(request, pk):
+    book = get_object_or_404(BookAttribute, pk=pk)
+    if request.method == "POST":
+        form = BookAttributeForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            book = form.save()
+            return redirect('book_detail', pk=book.pk)
+        else: 
+            print("Form tidak Valid")
+    else:
+        form = BookAttributeForm(instance=book)
+    return render(request, 'templates/library/book_form.html', {'form' : form})
+
+
+def book_delete(request, pk):
+    book = get_object_or_404(BookAttribute, pk=pk)
+    if request.method == "POST":
+        book.delete()
+        return redirect('book_list')
+    return render(request, 'templates/library/book_confirm_delete.html', {'book': book})
+
+@user_passes_test(is_active)
+def pinjam_buku(request):
+    if request.method == 'POST':
+        form = FormPeminjaman(request.POST)
+        if form.is_valid():
+            transaksi_peminjaman = form.save(commit=False)
+            buku = transaksi_peminjaman.buku
+            if buku.status_peminjaman == 'available':
+                buku.status_peminjaman == 'not-available'
+                buku.save()
+                transaksi_peminjaman.save()
+                return redirect('daftar_buku')
+    
+    else:
+        form = FormPeminjaman()
+    return render(request, 'pinjam_buku.html', {'form' : form})
+
+@user_passes_test(is_active)
+def kembalikan_buku(request, transaksi_id):
+    transaksi = get_object_or_404(TransaksiPeminjaman, id=transaksi_id)
+    if request.method == 'POST':
+        form = FormPengembalian(request.POST, instance=transaksi_id)
+        if form.is_valid():
+            buku = transaksi.buku
+            buku.status_peminjaman = 'available'
+            buku.save()
+            transaksi.tanggal_kembali = datetime.now()
+            transaksi.save()
+            return redirect('daftar_buku')
+    
+    else:
+        form = FormPengembalian(instance=transaksi)
+    return render(request, 'kembalikan_buku.html', {'form': form})

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib import admin
 from django.db.models.signals import post_save
@@ -19,6 +20,16 @@ class BookAttribute(models.Model):
     ])
     def __str__(self):
         return self.judulBuku
+    
+class TransaksiPeminjaman(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    buku = models.ForeignKey(BookAttribute, on_delete=models.CASCADE)
+    tanggal_pinjam = models.DateTimeField(default=datetime.now)
+    tanggal_kembali = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.buku.Judulbuku}"
+
     
 class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)

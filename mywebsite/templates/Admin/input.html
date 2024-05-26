@@ -6,11 +6,12 @@
 <title>{% block head_tittle %}Admin | Perpustakaan {% endblock head_tittle %}</title>
 {% include 'bootstrap5.html' %}
 {% include 'snippets/navbaradmin.html' %}
-<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/admin.css' %}">
+
 <head>
 <body>
     <div class="form">  
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="my-3 pt-5 rounded shadow-sm">
         <form action='' method='post'>
             <div class="mb-3 row">
                 <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>

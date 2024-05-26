@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.gradient-form {
+  background-color: #eee;
+}
+
+.card {
+  max-width: 600px; /* Optional: Adjust the width of the card */
+}

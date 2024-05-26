@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from library import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path, include
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
@@ -26,3 +29,12 @@ urlpatterns = [
     path(r'detailbook', views.detailbook, name='detailbook'),
     path(r'logout', views.logoutadm, name="logout"),
 ]
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('library.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
