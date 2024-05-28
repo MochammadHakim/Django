@@ -9,6 +9,7 @@
     <meta content="" name="keywords" />
 
     <!-- Load static template tags -->
+
     {% load static %}
 
     <!-- Google Fonts -->
@@ -94,7 +95,11 @@
               </div>
               <div class="cta-holder row gx-md-3 gy-3 gy-md-0">
                 <div class="col-12 col-md-auto">
-                  <button type="button" class="btn btn-outline-primary w-100">Detail Book</button>
+                  {% if books %}
+                  <a href="{% url 'detailbook' books.0.pk %}">
+                    <button type="button" class="btn btn-outline-primary w-100">Detail Book</button>
+                  </a>
+                  {% endif %}
                 </div>
               </div>
               <div class="hero-quotes mt-5">
@@ -127,48 +132,11 @@
         </div>
       </div>
     </section>
-
     <section id="benefits-section" class="skills section-bg">
       <div class="container py-5">
         <h2 class="section-heading text-center mb-3">List Buku-Buku</h2>
         <div class="section-intro single-col-max mx-auto text-center mb-5">Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit consequat consequat. Orci varius natoque penatibus et magnis.</div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
-
-          {%for book in books %}
-          <div class="col">
-            <div class="card">
-              <img src="{% static 'assets/img/cover1.png' %}" class="card-img-top" alt="book cover" />
-              <div class="card-body">
-                <h5 class="card-title">Laskar Pelangi</h5>
-                <p class="card-text">“Laskar Pelangi” adalah novel karya Andrea Hirata yang mengisahkan tentang perjuangan sekelompok anak-anak dari...</p>
-                <a href="{% url 'book_detail' id=book.pk %}" class="btn btn-primary">More Detail</a>
-                {% if book.status_peminjaman == 'available' %}
-                <form action="{url 'pinjam_buku' id=book.pk %} method="post">
-                  {csrf_token %}
-                  <button type="submit" class="btn-outline-success">Borrow</button>
-                </form>
-                {% else %}
-                <form action="{% url 'kembalikan_buku' id=book.pk %} method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-info">Return</button>
-                </form>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-          <div class="col">
-            <div class="card">
-              <img src="{% static 'assets/img/cover3.jpg' %}" class="card-img-top" alt="book cover" />
-              <div class="card-body">
-                <h5 class="card-title">Dreamist of the Stars</h5>
-                <p class="card-text">Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya...</p>
-                <a href="#" class="btn btn-primary">More Detail</a>
-                <button type="button" class="btn btn-outline-success">Borrow</button>
-                <button type="button" class="btn btn-outline-info">Return</button>
-              </div>
-            </div>
-          </div>
           {% for book in books %}
           <div class="col">
             <div class="card">
@@ -183,46 +151,9 @@
             </div>
           </div>
           {% endfor %}
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="book cover" />
-              <div class="card-body">
-                <h5 class="card-title">Judul Buku</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">More Detail</a>
-                <button type="button" class="btn btn-outline-success">Borrow</button>
-                <button type="button" class="btn btn-outline-info">Return</button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="book cover" />
-              <div class="card-body">
-                <h5 class="card-title">Judul Buku</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">More Detail</a>
-                <button type="button" class="btn btn-outline-success">Borrow</button>
-                <button type="button" class="btn btn-outline-info">Return</button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="book cover" />
-              <div class="card-body">
-                <h5 class="card-title">Judul Buku</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">More Detail</a>
-                <button type="button" class="btn btn-outline-success">Borrow</button>
-                <button type="button" class="btn btn-outline-info">Return</button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
-
     <!-- Vendor JS Files -->
     <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
     <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

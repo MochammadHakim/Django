@@ -65,7 +65,15 @@
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Jumlah Halaman:</strong> <span>{{ book.jumlahHalaman }}</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Publish:</strong> <span>SMA PGII 1 Bandung</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Status Peminjaman:</strong> <span class="badge rounded-pill text-bg-success">{{ book.status_peminjaman }}</span></li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i> 
+                    <strong>Status Peminjaman:</strong> 
+                    {% if book.status_peminjaman == 'available' %}
+                        <span class="badge rounded-pill text-bg-success">{{ book.status_peminjaman }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger">{{ book.status_peminjaman }}</span>
+                    {% endif %}
+                </li>
                 </ul>
               </div>
             </div>

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import user_passes_test
 from .forms import FormLogin, BookAttributeForm, FormPeminjaman, FormPengembalian
 from django.conf import settings
 from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 def is_staff(user):
@@ -16,7 +17,8 @@ def is_active(user):
 
 def home(request):
     books = BookAttribute.objects.all()
-    return render(request, 'base.html', {'books': books})
+    transaksi = TransaksiPeminjaman.objects.all()  #\
+    return render(request, 'base.html', {'books': books, 'transaksi': transaksi})
 
 def loginadm(request):
     form = FormLogin()
@@ -30,11 +32,16 @@ def loginadm(request):
             custom_user = CustomUser.objects.get(user=user)
             if custom_user.is_staff:
                 login(request, user)
-                return redirect(input)
+                return redirect('input')
             elif custom_user.is_active:
                 login(request, user)
-                return redirect(home)
+                return redirect('home')
+        else:
+            # Add an error message for incorrect credentials
+            messages.error(request, 'Invalid username or password. Please try again.')
+
     return render(request, 'login/login.html', {'form':form})
+
 
 @user_passes_test(is_staff)
 def input(request):
@@ -45,7 +52,7 @@ def input(request):
         form = BookAttributeForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save()
-            return redirect('home')  # Mengarahkan kembali ke halaman beranda setelah menyimpan
+            return redirect('input')  # Mengarahkan kembali ke halaman beranda setelah menyimpan
     else:
         form = BookAttributeForm()
 
@@ -85,35 +92,37 @@ def book_delete(request, pk):
     return render(request, 'templates/library/book_confirm_delete.html', {'book': book})
 
 @user_passes_test(is_active)
-def pinjam_buku(request):
+def pinjam_buku(request, pk):
+    buku = get_object_or_404(BookAttribute, pk=pk)
     if request.method == 'POST':
         form = FormPeminjaman(request.POST)
         if form.is_valid():
-            transaksi_peminjaman = form.save(commit=False)
-            buku = transaksi_peminjaman.buku
-            if buku.status_peminjaman == 'available':
-                buku.status_peminjaman == 'not-available'
-                buku.save()
-                transaksi_peminjaman.save()
-                return redirect('daftar_buku')
-    
+            transaksi = form.save(commit=False)
+            transaksi.user = request.user
+            transaksi.buku = buku
+            transaksi.save()
+            buku.status_peminjaman = 'not-available'
+            buku.save()
+            messages.success(request, 'Buku berhasil dipinjam.')
+            return redirect('home')
     else:
         form = FormPeminjaman()
-    return render(request, 'pinjam_buku.html', {'form' : form})
+    return render(request, 'pinjam_buku.html', {'form': form, 'buku': buku})
 
 @user_passes_test(is_active)
 def kembalikan_buku(request, transaksi_id):
-    transaksi = get_object_or_404(TransaksiPeminjaman, id=transaksi_id)
+    transaksi = get_object_or_404(TransaksiPeminjaman, pk=transaksi_id)
     if request.method == 'POST':
-        form = FormPengembalian(request.POST, instance=transaksi_id)
+        form = FormPengembalian(request.POST, instance=transaksi)
         if form.is_valid():
+            transaksi = form.save(commit=False)
+            transaksi.tanggal_kembali = datetime.now()
+            transaksi.save()
             buku = transaksi.buku
             buku.status_peminjaman = 'available'
             buku.save()
-            transaksi.tanggal_kembali = datetime.now()
-            transaksi.save()
-            return redirect('daftar_buku')
-    
+            messages.success(request, 'Buku berhasil dikembalikan.')
+            return redirect('home')
     else:
         form = FormPengembalian(instance=transaksi)
-    return render(request, 'kembalikan_buku.html', {'form': form})
+    return render(request, 'base.html', {'form': form, 'transaksi': transaksi})
