@@ -144,9 +144,18 @@
               <div class="card-body">
                 <h5 class="card-title">{{ book.judulBuku }}</h5>
                 <p class="card-text">{{ book.deskripsi }}</p>
-                <a href="{% url 'detailbook' book.pk %}" class="btn btn-primary">More Detail</a>
-                <button type="button" class="btn btn-outline-success">Borrow</button>
-                <button type="button" class="btn btn-outline-info">Return</button>
+                <a href="{% url 'detailbook' book.pk %}" class="btn btn-primary">Lihat detail</a>
+                {% if book.status_peminjaman == 'available' %}
+                <form action="{% url 'borrow_book' book.pk %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Borrow</button>
+                </form>
+                {% else %} {% for transaksi in transaksi %} {% if transaksi.buku.pk == book.pk %}
+                <form action="{% url 'return_book' transaksi.pk %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Return</button>
+                </form>
+                {% endif %} {% endfor %} {% endif %}
               </div>
             </div>
           </div>

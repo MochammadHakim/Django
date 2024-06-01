@@ -62,7 +62,11 @@ def input(request):
 
 def detailbook(request, pk):
     book = get_object_or_404(BookAttribute, pk=pk)
-    return render(request, 'detailbook.html', {'book':book})
+    if request.user.is_authenticated:
+        transaksi_list = TransaksiPeminjaman.objects.filter(buku=book, user=request.user)
+    else:
+        transaksi_list = []
+    return render(request, 'detailbook.html', {'book': book, 'transaksi_list': transaksi_list})
 
 def logoutadm(request):
     logout(request)
@@ -92,37 +96,31 @@ def book_delete(request, pk):
     return render(request, 'templates/library/book_confirm_delete.html', {'book': book})
 
 @user_passes_test(is_active)
-def pinjam_buku(request, pk):
-    buku = get_object_or_404(BookAttribute, pk=pk)
+def borrow_book(request, pk):
+    book = get_object_or_404(BookAttribute, pk=pk)
     if request.method == 'POST':
-        form = FormPeminjaman(request.POST)
-        if form.is_valid():
-            transaksi = form.save(commit=False)
-            transaksi.user = request.user
-            transaksi.buku = buku
-            transaksi.save()
-            buku.status_peminjaman = 'not-available'
-            buku.save()
+        if book.status_peminjaman == 'available':
+            transaksi = TransaksiPeminjaman.objects.create(buku=book, user=request.user)
+            book.status_peminjaman = 'not-available'
+            book.save()
             messages.success(request, 'Buku berhasil dipinjam.')
             return redirect('home')
-    else:
-        form = FormPeminjaman()
-    return render(request, 'pinjam_buku.html', {'form': form, 'buku': buku})
+        else:
+            messages.error(request, 'Buku tidak tersedia.')
+            return redirect('home')
 
 @user_passes_test(is_active)
-def kembalikan_buku(request, transaksi_id):
+def return_book(request, transaksi_id):
     transaksi = get_object_or_404(TransaksiPeminjaman, pk=transaksi_id)
     if request.method == 'POST':
-        form = FormPengembalian(request.POST, instance=transaksi)
-        if form.is_valid():
-            transaksi = form.save(commit=False)
-            transaksi.tanggal_kembali = datetime.now()
-            transaksi.save()
-            buku = transaksi.buku
-            buku.status_peminjaman = 'available'
-            buku.save()
-            messages.success(request, 'Buku berhasil dikembalikan.')
+        # handle POST request logic here
+        if transaksi.user == request.user:
+            book = transaksi.buku
+            book.status_peminjaman = 'available'
+            book.save()
+            transaksi.delete()
             return redirect('home')
-    else:
-        form = FormPengembalian(instance=transaksi)
-    return render(request, 'base.html', {'form': form, 'transaksi': transaksi})
+        else:
+            return redirect('home')
+    
+    return render(request, 'home', {'transaksi': transaksi})

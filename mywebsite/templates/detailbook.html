@@ -79,8 +79,22 @@
             </div>
             <p>"It was a really great story, isn’t that right?"</p>
             <p>{{ book.deskripsi }}</p>
-            <button type="button" class="btn btn-primary">Borrow</button>
-            <button type="button" class="btn btn-warning">Return Book</button>
+            {% if book.status_peminjaman == 'available' %}
+            <form action="{% url 'borrow_book' book.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Borrow</button>
+            </form>
+        {% else %}
+            {% for transaksi in transaksi_list %}
+                {% if transaksi.buku.pk == book.pk %}
+                    <form action="{% url 'return_book' transaksi.pk %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary">Return</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+              </div>
           </div>
         </div>
       </div>
