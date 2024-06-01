@@ -103,7 +103,6 @@ def borrow_book(request, pk):
             transaksi = TransaksiPeminjaman.objects.create(buku=book, user=request.user)
             book.status_peminjaman = 'not-available'
             book.save()
-            messages.success(request, 'Buku berhasil dipinjam.')
             return redirect('home')
         else:
             messages.error(request, 'Buku tidak tersedia.')

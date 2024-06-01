@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,10 +8,6 @@
     <title>Landing Page</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
-
-    <!-- Load static template tags -->
-
-    {% load static %}
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
@@ -80,6 +77,16 @@
       .swiper-container:hover .swiper-button-prev {
         opacity: 1;
       }
+
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .button-group form {
+        margin: 0;
+      }
     </style>
   </head>
 
@@ -135,7 +142,10 @@
     <section id="benefits-section" class="skills section-bg">
       <div class="container py-5">
         <h2 class="section-heading text-center mb-3">List Buku-Buku</h2>
-        <div class="section-intro single-col-max mx-auto text-center mb-5">Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit consequat consequat. Orci varius natoque penatibus et magnis.</div>
+        <div class="section-intro single-col-max mx-auto text-center mb-5">
+          Temukan dunia-dunia baru, cerita-cerita yang menggetarkan hati, dan karakter-karakter yang tak terlupakan dalam list buku fiksi terbaik tahun ini. Dari novel-novel yang menggugah emosi hingga petualangan-petualangan epik, setiap
+          buku di sini akan membawa Anda ke dalam pengalaman membaca yang mendalam dan memikat.
+        </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
           {% for book in books %}
           <div class="col">
@@ -143,19 +153,23 @@
               <img src="{{ book.coverBuku.url }}" class="card-img-top" alt="book cover" />
               <div class="card-body">
                 <h5 class="card-title">{{ book.judulBuku }}</h5>
+                <span class="badge rounded-pill text-bg-{% if book.status_peminjaman == 'available' %}success{% else %}danger{% endif %}"> {% if book.status_peminjaman == 'available' %} Available {% else %} Unavailable {% endif %} </span>
+
                 <p class="card-text">{{ book.deskripsi }}</p>
-                <a href="{% url 'detailbook' book.pk %}" class="btn btn-primary">Lihat detail</a>
-                {% if book.status_peminjaman == 'available' %}
-                <form action="{% url 'borrow_book' book.pk %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-primary">Borrow</button>
-                </form>
-                {% else %} {% for transaksi in transaksi %} {% if transaksi.buku.pk == book.pk %}
-                <form action="{% url 'return_book' transaksi.pk %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-primary">Return</button>
-                </form>
-                {% endif %} {% endfor %} {% endif %}
+                <div class="button-group">
+                  <a href="{% url 'detailbook' book.pk %}" class="btn btn-primary">More Detail</a>
+                  {% if book.status_peminjaman == 'available' %}
+                  <form action="{% url 'borrow_book' book.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Borrow</button>
+                  </form>
+                  {% else %} {% for transaksi in transaksi %} {% if transaksi.buku.pk == book.pk %}
+                  <form action="{% url 'return_book' transaksi.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Return</button>
+                  </form>
+                  {% endif %} {% endfor %} {% endif %}
+                </div>
               </div>
             </div>
           </div>
