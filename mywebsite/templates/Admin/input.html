@@ -10,7 +10,7 @@
 <head>
 <body>
     <div class="form">  
-    <div class="my-3 bg-body rounded shadow-sm">
+    <div class="my-3 bg-body rounded shadow-sm pt-5 pb-5">
         <form method="post" action="{% url 'input' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3 row">
@@ -60,14 +60,15 @@
                     {{ form.coverBuku }}
                 </div>
             </div>
+            
+            
             <div class="mb-3 row">
                 <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
-                <div class="mb-3 row">
-                    <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
-                    <div class="col-sm-10">
-                        {{ form.status_peminjaman }}
-                    </div>
+                <div class="col-sm-10">
+                    {{ form.status_peminjaman }}
                 </div>
+            </div>
+            
             
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label"></label>

@@ -34,7 +34,7 @@ class BookAttributeForm(forms.ModelForm):
             'status_peminjaman': forms.RadioSelect(choices=[
                 ('available', 'Available'),
                 ('not-available', 'Not Available')
-            ], attrs={'class': 'form-check-input'}),
+            ], attrs={'class': ''}),
         }
 
 class FormPeminjaman(forms.ModelForm):

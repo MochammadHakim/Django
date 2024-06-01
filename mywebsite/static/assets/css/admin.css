@@ -113,7 +113,7 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
 }
-
+/* 
 .form-check-input {
   width: 1.5em;
   height: 1.5em;
@@ -128,7 +128,7 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 0.5em;
-}
+} */
 
 .btn-outline-success:hover {
   color: #343a40; /* Mengubah warna teks saat dihover */
