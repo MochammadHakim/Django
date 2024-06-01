@@ -1,0 +1,9 @@
+{% load static %}
+
+<h2>Hapus Buku</h2>
+<p>Apakah Anda yakin ingin menghapus buku "{{ book.judulBuku }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Ya, hapus</button>
+  <a href="{% url 'input'%}">Tidak, kembali</a>
+</form>

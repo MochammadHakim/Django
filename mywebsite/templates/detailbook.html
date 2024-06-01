@@ -11,8 +11,8 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
   {% include 'bootstrap5.html' %}
-  {% include 'snippets/navbaradmin.html' %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% include 'snippets/navbar.html' %}
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -41,49 +41,68 @@
     <!-- ======= Book Menu Section ======= -->
     <section id="about" class="about">
       <div class="container">
-
-        <div class="section-title">
+    
+        <div class="section-title pt-5">
           <h2>Book Menu</h2>
         </div>
-
+    
         <div class="row">
           <div class="col-lg-4" data-aos="fade-right">
-            <img src="{% static 'assets/img/profile-img.jpg' %}" class="img-fluid" alt="">
+            <img src="{{ book.coverBuku.url }}" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-            <h3>DREAMIST OF THE STARS</h3>
-            <p class="fst-italic">
-              Indonesian Best Seller
-            </p>
+            <h3>{{ book.judulBuku }}</h3>
+            <p class="fst-italic">Indonesian Best Seller</p>
             <div class="row">
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Tahun Terbit:</strong> <span>14 November 2022</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Penulis:</strong> <span>Janiar Rahma Putri</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Kategori:</strong> <span class="badge rounded-pill text-bg-primary">Fantasi</span><span class="badge rounded-pill text-bg-secondary">Drama</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Tahun Terbit:</strong> <span>{{ book.tahunTerbit }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Penulis:</strong> <span>{{ book.penulisBuku }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Kategori:</strong> <span class="badge rounded-pill text-bg-primary">{{ book.kategoriBuku }}</span>
                 </ul>
               </div>
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Jumlah Halaman:</strong> <span>258 Halaman</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Jumlah Halaman:</strong> <span>{{ book.jumlahHalaman }}</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Publish:</strong> <span>SMA PGII 1 Bandung</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Status Peminjaman:</strong> <span class="badge rounded-pill text-bg-success">Available</span></li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i> 
+                    <strong>Status Peminjaman:</strong> 
+                    {% if book.status_peminjaman == 'available' %}
+                        <span class="badge rounded-pill text-bg-success">{{ book.status_peminjaman }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger">{{ book.status_peminjaman }}</span>
+                    {% endif %}
+                </li>
                 </ul>
               </div>
             </div>
-            <p>
-              “It was a really great story, isn’t that right?”
-            </p>
-          <p>Dreamist of the Stars adalah buku pertama yang ditulis oleh Janiar Rahma Putri pada semasa SMA nya. Buku ini menceritakan seorang gadis dan para teman-temaannya yang sedang berjuang bertahan hidup di dunia yang sebentar lagi hancur. Lalu, bagaimana nasib gadis itu?</p>
-          <button type="button" class="btn btn-primary">Borrow</button>
-          <button type="button" class="btn btn-warning">Return Book</button>
+            <p>"It was a really great story, isn’t that right?"</p>
+            <p>{{ book.deskripsi }}</p>
+            {% if book.status_peminjaman == 'available' %}
+            <form action="{% url 'borrow_book' book.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Borrow</button>
+            </form>
+        {% else %}
+            {% for transaksi in transaksi_list %}
+                {% if transaksi.buku.pk == book.pk %}
+                    <form action="{% url 'return_book' transaksi.pk %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary">Return</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+              </div>
+          </div>
         </div>
-
       </div>
-    </section><!-- End About Section -->
+    </section>
+    <!-- End About Section -->
 
     <!-- ======= Information Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
+    <!-- <section id="portfolio" class="portfolio section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -131,7 +150,8 @@
         </div>
 
       </div>
-    </section><!-- End Information Section -->
+    </section> -->
+    <!-- End Information Section -->
 
   </main><!-- End #main -->
 

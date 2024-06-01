@@ -1,0 +1,22 @@
+{% load static %} {% for book in books %}
+<h2><a href="{% url 'book_detail' pk=book.pk %}">{{ book.judulBuku }}</a></h2>
+<p>{{ book.penulisBuku }}</p>
+<p>{{ book.tahunTerbit }}</p>
+<p>{{ book.kategoriBuku }}</p>
+<p>{{ book.jumlahHalaman }} halaman</p>
+<p>Status: {{ book.status_peminjaman }}</p>
+<img src="{{ book.coverBuku.url }}" alt="{{ book.judulBuku }}" />
+<a href="{% url 'book_edit' pk=book.pk %}">Edit</a>
+<a href="{% url 'book_delete' pk=book.pk %}"> Delete</a>
+
+{% if book.status_peminjaman == 'available' %}
+<form action="{% url 'pinjam_buku' pk=book.pk %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Borrow</button>
+</form>
+{% else %}
+<form action="{% url 'kembalikan_buku' pk=book.pk %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Return</button>
+</form>
+{% endif %} {% endfor %}

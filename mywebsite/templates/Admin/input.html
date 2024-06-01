@@ -1,115 +1,112 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang=en>
-
+<html lang="en">
 <head>
-<title>{% block head_tittle %}Admin | Perpustakaan {% endblock head_tittle %}</title>
-{% include 'bootstrap5.html' %}
-{% include 'snippets/navbaradmin.html' %}
-<link rel="stylesheet" href="{% static 'css/admin.css' %}">
-<head>
+    <title>{% block head_title %}Admin | Perpustakaan {% endblock head_title %}</title>
+    {% include 'bootstrap5.html' %}
+    {% include 'snippets/navbaradmin.html' %}
+    <link rel="stylesheet" href="{% static 'assets/css/admin.css' %}">
+</head>
 <body>
     <div class="form">  
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <form action='' method='post'>
-            <div class="mb-3 row">
-                <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name='judul' id="judul">
+        <div class="my-3 bg-body rounded shadow-sm pt-5 pb-5">
+            <form method="post" action="{% url 'input' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3 row">
+                    <label for="judul" class="col-sm-2 col-form-label">Judul Buku</label>
+                    <div class="col-sm-10">
+                        {{ form.judulBuku }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="nama" class="col-sm-2 col-form-label">Pengarang</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name='pengarang' id="pengarang">
+                <div class="mb-3 row">
+                    <label for="nama" class="col-sm-2 col-form-label">Pengarang</label>
+                    <div class="col-sm-10">
+                        {{ form.penulisBuku }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="tahun_Terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control w-50" name='tahun_terbit' id="tahun_terbit">
+                <div class="mb-3 row">
+                    <label for="tahun_Terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
+                    <div class="col-sm-10">
+                        {{ form.tahunTerbit }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name='kategori' id="kategori">
+                <div class="mb-3 row">
+                    <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
+                    <div class="col-sm-10">
+                        {{ form.kategoriBuku }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="jumlah_halaman" class="col-sm-2 col-form-label">Jumlah halaman</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name='jumlah_halaman' id="jumlah_halaman">
+                <div class="mb-3 row">
+                    <label for="jumlah_halaman" class="col-sm-2 col-form-label">Jumlah Halaman</label>
+                    <div class="col-sm-10">
+                        {{ form.jumlahHalaman }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="cover_buku" class="col-sm-2 col-form-label">Cover Buku</label>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" name='cover_buku' id="cover_buku">
+                <div class="mb-3 row">
+                    <label for="deskripsi" class="col-sm-2 col-form-label">Deskripsi</label>
+                    <div class="col-sm-10">
+                        {{ form.deskripsi }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="available" value="available" checked>
-                        <label class="form-check-label" for="available">
-                          Available
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="not-available" value="not-available">
-                        <label class="form-check-label" for="not-available">
-                          Not Available
-                        </label>
-                      </div>
+                <div class="mb-3 row">
+                    <label for="cover_buku" class="col-sm-2 col-form-label">Cover Buku</label>
+                    <div class="col-sm-10">
+                        {{ form.coverBuku }}
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
+                <div class="mb-3 row">
+                    <label for="status_peminjaman" class="col-sm-2 col-form-label">Status Peminjaman</label>
+                    <div class="col-sm-10">
+                        {{ form.status_peminjaman }}
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <!-- AKHIR FORM -->
-    
-    <!-- START DATA -->
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="col-md-1">No</th>
-                    <th class="col-md-1">Judul</th>
-                    <th class="col-md-1">Pengarang</th>
-                    <th class="col-md-1">Tahun Terbit</th>
-                    <th class="col-md-1">Kategori</th>
-                    <th class="col-md-1">Halaman</th>
-                    <th class="col-md-1">Cover Buku</th>
-                    <th class="col-md-1">Status Peminjaman</th>
-                    <th class="col-md-1">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Laskar Pelangi</td>
-                    <td>Andrea Hirata</td>
-                    <td>2005</td>
-                    <td>Novel</td>
-                    <td>529</td>
-                    <td></td>
-                    <td>Available</td>
-                    <td>
-                        <a href="" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="" class="btn btn-danger btn-sm">Del</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    
-    </div>
-</div>
+                <div class="mb-3 row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-primary custom-button">SIMPAN</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- AKHIR FORM -->
 
+        <!-- START DATA -->
+        <div class="my-3 pt-5 bg-body rounded shadow-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">No</th>
+                        <th class="col-md-1">Judul</th>
+                        <th class="col-md-1">Pengarang</th>
+                        <th class="col-md-1">Tahun Terbit</th>
+                        <th class="col-md-1">Kategori</th>
+                        <th class="col-md-1">Halaman</th>
+                        <th class="col-md-1">Deskripsi</th>
+                        <th class="col-md-1">Cover Buku</th>
+                        <th class="col-md-1">Status Peminjaman</th>
+                        <th class="col-md-1">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ book.judulBuku }}</td>
+                        <td>{{ book.penulisBuku }}</td>
+                        <td>{{ book.tahunTerbit }}</td>
+                        <td>{{ book.kategoriBuku }}</td>
+                        <td>{{ book.jumlahHalaman }}</td>
+                        <td>{{ book.deskripsi }}</td>
+                        <td><img src="{{ book.coverBuku.url }}" alt="{{ book.judulBuku }}" class="cover-image" /></td>
+                        <td>{{ book.status_peminjaman }}</td>
+                        <td>
+                            <a href="{% url 'book_edit' book.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger btn-sm">Del</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

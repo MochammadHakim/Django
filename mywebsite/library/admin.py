@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import BookAttribute, CustomUser
+from .models import BookAttribute, CustomUser, TransaksiPeminjaman
 
 class CustomUserInline(admin.StackedInline):
     model = CustomUser
@@ -17,3 +17,4 @@ admin.site.register(User, UserAdmin)
 
 # Register other models
 admin.site.register(BookAttribute)
+admin.site.register(TransaksiPeminjaman)

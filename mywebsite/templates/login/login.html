@@ -4,24 +4,32 @@
     <title>{% block head_title %}Admin-Login{% endblock head_title %}</title>
     {% include 'bootstrap5.html' %} {% include 'snippets/navbar.html' %} {% load static %}
   </head>
-
+  <link href="{% static 'assets/css/admin.css' %}" rel="stylesheet" />
   <body>
-    <section class="h-100 gradient-form" style="background-color: #eee">
+    <section class="h-100 gradient-form pt-5">
       <div class="container py-5 h-100">
-        <div class="row justify-content-center align-items-center">
-          <div class="col-xl-10 d-flex justify-content-center">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-xl-10 d-flex justify-content-center h-100">
             <div class="card rounded-3 text-black">
               <div class="row g-0">
                 <div class="col">
-                  <div class="card-body p-md-5 mx-md-4">
+                  <div class="card-body p-md-5 mx-md-5">
                     <div class="text-center">
-                      <img src="{% static 'images/adaptive.png' %}" style="width: 185px" alt="Adaptive Network Laboratory Telkom University" />
+                      <img src="{% static 'assets/img/adaptive.png' %}" style="width: 185px" alt="Adaptive Network Laboratory Telkom University" />
                       <h4 class="mt-1 mb-5 pb-1">Adaptive Library</h4>
                       <!-- Mengganti tulisan -->
                     </div>
 
                     <form class="user" action="" method="POST">
-                      {% csrf_token %}
+                      {% if messages %}
+                      <div class="alert alert-danger">
+                        <ul>
+                          {% for message in messages %}
+                          <li>{{ message }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      {% endif %} {% csrf_token %}
                       <p>Please login to your account</p>
 
                       <div data-mdb-input-init class="form-outline mb-4">
@@ -40,16 +48,6 @@
                     </form>
                   </div>
                 </div>
-                <!-- <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                    <h4 class="mb-4">We are more than just a company</h4>
-                                    <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                        eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                        nostrud
-                                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                            </div> -->
               </div>
             </div>
           </div>
